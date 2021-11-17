@@ -1,4 +1,4 @@
-# Copyright 2020 Kevin Backhouse.
+# Copyright 2020-2021 Kevin Backhouse.
 #
 # This file is part of DBusParseDemo.
 #
@@ -27,6 +27,9 @@ project(DBusParseDemo VERSION 1.0.0 DESCRIPTION "Demos of using the DBusParse li
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
+set(EPollLoop_DIR "${CMAKE_SOURCE_DIR}/EPollLoop")
+set(DBusParse_DIR "${CMAKE_SOURCE_DIR}/DBusParse")
+
 option(USE_SANITIZERS "Enable ASAN and UBSAN" OFF)
 
 add_compile_options(-Wall -Wextra -pedantic -Werror)
@@ -40,9 +43,19 @@ if (USE_SANITIZERS)
 endif()
 
 add_subdirectory(DBusParse)
+add_subdirectory(EPollLoop)
+add_subdirectory(EPollLoopDBusHandler)
 
 add_executable(introspect introspect.cpp)
 target_link_libraries(introspect PUBLIC DBusParse DBusParseUtils)
 target_include_directories(
         introspect PRIVATE
         $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/DBusParse/include/DBusParse>)
+
+add_executable(introspect_async introspect_async.cpp)
+target_link_libraries(introspect_async PUBLIC DBusParse DBusParseUtils EPollLoop EPollLoopDBusHandler)
+target_include_directories(
+        introspect_async PRIVATE
+        $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/DBusParse/include/DBusParse>
+        $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/EPollLoop/include/EPollLoop>
+        $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/EPollLoopDBusHandler/include/EPollLoopDBusHandler>)

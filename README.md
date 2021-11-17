@@ -1,4 +1,4 @@
-Copyright 2020 Kevin Backhouse.
+Copyright 2020-2021 Kevin Backhouse.
 
 # DBusParseDemo
 
@@ -25,3 +25,11 @@ To run the `introspect` application:
 ```bash
 ./introspect /var/run/dbus/system_bus_socket org.freedesktop.PolicyKit1 /org/freedesktop/PolicyKit1/Authority
 ```
+
+To run the `introspect_async` application:
+
+```bash
+./introspect_async /var/run/dbus/system_bus_socket org.freedesktop.PolicyKit1 /org/freedesktop/PolicyKit1/Authority
+```
+
+The `introspect_async` application is like `introspect`, except is uses the [`EPollLoop`](https://github.com/kevinbackhouse/EPollLoop) and [`EPollLoopDBusHandler`](https://github.com/kevinbackhouse/EPollLoopDBusHandler) to send and receive D-Bus messages asynchronously.
