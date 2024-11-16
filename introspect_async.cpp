@@ -37,8 +37,7 @@ public:
 
       send_call(DBusMessageBody::mk0(), _s(objectpath_),
                 _s("org.freedesktop.DBus.Introspectable"), _s(destination_),
-                _s("Introspect"),
-                [](const DBusMessage &message, bool) -> int {
+                _s("Introspect"), [](const DBusMessage &message, bool) -> int {
                   print_dbus_message(STDOUT_FILENO, message);
                   return -1;
                 });
